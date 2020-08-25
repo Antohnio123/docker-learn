@@ -8,3 +8,19 @@ before_install:
 
 script:
   - docker run -it antohnio/frontend1 npm run test -- --coverage
+
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+#  region taken from our link on Amazon: http://dockerfrontend1-env.eba-2i6gw5av.us-east-2.elasticbeanstalk.com/
+  app: "docker-frontend1"
+  env: "DockerFrontend1-env"
+  bucket_name: "elasticbeanstalk-us-east-2-028304147848"
+  bucket_path: "docker-frontend1"
+# Just copy an app name to bucket_path
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  swcret_access_key:
+    secure: "$AWS_SECRET_KEY"
